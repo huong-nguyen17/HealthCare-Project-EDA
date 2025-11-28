@@ -1,196 +1,205 @@
-🏥 Healthcare Cost & Utilization Analytics Project
-A Comprehensive SQL + Power BI Analytical Review (2011–2021)
-📌 Overview
-This project provides an end‑to‑end analysis of healthcare cost behavior, patient utilization patterns, provider performance, and health‑outcome metrics (DALY & QALY). It is built on a curated enterprise data warehouse using gold‑layer dimensional tables.
+# 🏥 Healthcare Cost & Utilization Analytics (2011-2021)
 
-Deliverables include:
+A comprehensive analytics project examining healthcare cost drivers, patient utilization patterns, provider performance, and DALY/QALY health outcomes using a curated data warehouse (Gold Layer). Including:
+- **Exploratory Data Analysis (EDA)** 
+- **Cost Driver Analysis** 
+- **Patient Segmentation (Deciles / Cost Bands)** 
+- **Provider Performance & Workload Analysis** 
+- **DALY/QALY Outcome Study** 
+- - **Executive‑level Power BI Dashboard** 
+---
 
-✔ Exploratory Data Analysis (EDA)
+## 📂 Cấu trúc repo
 
-✔ Cost driver analytics
+```
+healthcare-analytics/
+├── README.md
+│
+├── sql-scripts/
+│   ├── patient_EDA.sql
+│   ├── claim_analysis.sql
+│   ├── cost_driver_queries.sql
+│   ├── provider_performance.sql
+│   └── segmentation_DALY_QALY.sql
+│
+├── powerbi/
+│   └── Healthcare_Executive_Dashboard.pbix
+│
+├── documentation/
+│   ├── data_dictionary.md
+│   ├── model_schema.png
+│   └── executive_report.pdf
 
-✔ Provider workload & performance review
 
-✔ Patient cost segmentation (deciles & cost bands)
+````
 
-✔ DALY / QALY outcome analysis
+---
 
-✔ Executive‑focused Power BI dashboard
+## 🛠️Tools
+- **Database**: MS SQL Server  
+- **Excel**: Report  
+- **Visualization**: Power BI Desktop / Power BI Service  
+- **Version control**: GitHub  
 
-Tools Used: MS SQL Server, Power BI
-Source Warehouse: Health‑Care‑Warehouse‑Project
+---
 
-📂 Data Model & Tables
-Dimensional Tables
-Table	Description
-gold.dim_patient	Demographics, DOB, gender, location, DALY, QALY
-gold.dim_practitioner	Practitioner details & specialty
-gold.dim_claim	Claim headers, timestamps, status
-gold.dim_claimitem	Line‑level claim metadata (procedure/service)
-gold.dim_encounter	Encounter type (AMB/EMER/INP), care setting
-gold.dim_observation	Observation categories, units & codes
-Fact Tables
-Fact Table	Grain	Description
-gold.fact_claim	Claim line	Billed value, net value, patient & provider keys
-gold.fact_encounter_observation	Observation-per-encounter	Clinical measurements tied to patient & encounter
-The warehouse follows a clean star schema optimized for analytical workloads.
+## Datawarehouse
+Check this repo for info: https://github.com/huong-nguyen17/Health-Care-Warehouse-Project
 
-🎯 Project Objectives
-Build a reliable analytical foundation for healthcare cost insights
+### Dimensional Tables
 
-Identify major cost drivers (procedures, facilities, chronic diseases)
+```
+| Table                   | Description                                     |
+| ----------------------- | ----------------------------------------------- |
+| `gold.dim_patient`      | Demographics, age, gender, location, DALY, QALY |
+| `gold.dim_practitioner` | Practitioner profile & specialty                |
+| `gold.dim_claim`        | Claim header details                            |
+| `gold.dim_claimitem`    | Claim line metadata (procedure/service)         |
+| `gold.dim_encounter`    | Encounter type and care setting                 |
+| `gold.dim_observation`  | Observation code, category, units               |
 
-Segment patients by cost burden (deciles & cost bands)
+````
 
-Analyze provider performance & workload concentration
+---
 
-Evaluate population health outcomes using DALY & QALY
+### 2. Fact Tables
+```
+| Fact Table                        | Grain                     | Description                             |
+| --------------------------------- | ------------------------- | --------------------------------------- |
+| `gold.fact_claim`                 | Claim line                | NetValue, BilledValue, patient/provider |
+| `gold.fact_encounter_observation` | Observation per encounter | Lab/vitals/survey values                |
 
-Deliver executive‑ready visuals and summaries
+```
 
-🔍 Analytical Framework
-1️⃣ Data Quality Profiling
+---
+
+### 🎯 Project Objectives
+
+- **Build a strong analytical foundation for healthcare cost & utilization** 
+- **Identify key cost drivers (procedures, providers, conditions)** 
+- **Segment patients by cost intensity (deciles & cost bands)** 
+- **Evaluate provider workload, cost efficiency, and hospital concentration** 
+- **Analyze DALY & QALY across patient risk groups** 
+- **Deliver insights via a professional Power BI executive dashboard** 
+--------
+### 🔍 Analytical Framework
+
+ Data Quality Profiling
 Row completeness checks
 
-Missingness analysis (DOB, gender, location)
+Missingness (DOB, gender, city)
 
-Validation of PatientID & PractitionerID integrity
+Referential integrity validation
 
-Outlier checks for numeric observation values
+Outlier detection for lab/vital observations
 
-Deduplication for claims & encounter keys
+Duplicate timestamps and claim/encounter IDs
 
 2️⃣ Patient Population Profiling (2011–2021)
-Key analyses include:
-
-Age distribution & decile segmentation
-
-Gender and marital status
-
-Geographic distribution
-
-Race/ethnicity & language (12 languages represented)
-
-DALY & QALY health burden
-
-Highlights:
+Highlights
 
 1,473 unique patients
 
-Largest age group: 60–69
+Largest group: ages 60–69
 
 Gender split: 54.2% male / 45.8% female
 
 Top cities: Winnipeg, Whitehorse, Halifax
 
+DALY/QALY distribution used for burden/outcome analysis
+
 3️⃣ Claims & Cost Analysis
-140,716 total claim lines
+140,716 claim lines
 
-~$30M total NetValue
+Total NetValue approx. $30M
 
-Avg monthly NetValue per claim ≈ $120
+Average NetValue ~ $120 per claim per month
 
-Seasonal trend:
+Seasonal pattern:
 
-Peak: March
+Highest in March
 
-Lowest: September–November
+Lowest in Sept–Nov
 
-Cost concentration:
+Cost concentration
 
-Top 20% patients = 61.3% of total cost
+Top 20% of patients = 61.3% of total costs
 
-Clear Pareto pattern
+Strong Pareto curve
 
 4️⃣ Observation & Encounter Analytics
-Encounter classes:
+Encounter class distribution
 
 Ambulatory (AMB): 80–95%
 
-EMER + INP: stable minority share
+Emergency (EMER) & Inpatient (INP): minority share
 
-Top observation categories:
+Top observation categories
 
-Laboratory
+Lab (CBC, metabolic panel)
 
 Vital Signs
 
-Survey / Questionnaire
+Surveys / Health questionnaires
 
-Notable findings:
+Outlier clusters in BP, BMI, glucose correlate with high‑cost groups.
 
-Outlier clusters in BP, BMI, glucose map to high‑cost patients.
-
-🧠 Executive Key Findings
+🧠 Executive Insights
 ⭐ Major Cost Drivers
-Prenatal care procedures exceed $34M
+Prenatal care procedures > $34M
 
-Cardiology: CABG, PCI, cardioversion, thrombectomy costing $24K–$49K
+Cardiac surgeries/interventions: $24K–$49K per case
 
-Dialysis & immunotherapy = high recurring spend
+Dialysis & immunotherapy = recurring high‑spend categories
 
-Preventive care = high-volume, low-cost backbone
+Vaccination & routine exams = high‑volume, low‑cost workload
 
 ⭐ Provider Performance
-Top 5 hospitals account for majority of total spend
+Top 5 hospitals contribute the largest share of costs
 
-Remote locations show extremely high cost per claim (> $4,500)
+Remote facilities show very high per‑claim average (> $4,500)
 
-Primary care = high-volume, low-cost stabilizer
+Primary care = high‑volume, low‑cost backbone of the system
 
-Mental health & rehab = moderate spend, high strategic value
+Mental health & rehab providers = moderate spend but high strategic value
 
 ⭐ Patient Segmentation
 Top 10% = 51.64% of cost
 
 Bottom 50% = ~5%
 
-Males 65+ = highest-cost demographic
+Highest‑cost demographic = Males 65+
 
-High-cost patients yield largest QALY improvements
+Younger high‑cost groups exist (18–49), but with lower claim intensity
 
-DALY increases sharply across cost bands
+QALY increases with cost → high‑cost care yields meaningful health gains
 
-📈 Power BI Dashboard
-Includes:
 
-Executive summary
 
-Cost-driver analytics
+---
 
-Provider performance heatmaps
+### 📈 Power BI Dashboard
 
-Patient segmentation (deciles, cost bands)
+<img width="1115" height="627" alt="image" src="https://github.com/user-attachments/assets/7cc351d6-fab2-4053-9eb0-76c4258f7877" />
 
-DALY/QALY value insights
 
-Encounter & observation trends
+---
+### 🚀 Future Enhancements
+Predictive modeling for high‑cost patient forecasting
 
-(Add screenshot here if desired)
+Readmission risk modeling
 
-📦 Repository Structure
-/sql-scripts
-    ├── patient_EDA.sql
-    ├── claim_analysis.sql
-    ├── cost_driver_queries.sql
-    ├── provider_performance.sql
-    └── segmentation_DALY_QALY.sql
+Provider efficiency scoring using ML
 
-/powerbi
-    └── Healthcare_Executive_Dashboard.pbix
+NLP for clinical notes (if available)
 
-/documentation
-    ├── data_dictionary.md
-    ├── model_schema.png
-    └── executive_report.pdf
+---
 
-README.md
-🚀 Future Enhancements
-Predictive modeling for high‑cost patients
+## 📜 License
 
-Readmission risk & encounter forecasting
+[MIT](/LICENSE)
 
-NLP on clinical notes (if available)
+---
 
-Provider efficiency scoring (ML‑based)
+## 📬 Contact: [https://www.linkedin.com/in/huong-tris-n-847067111/]
 
